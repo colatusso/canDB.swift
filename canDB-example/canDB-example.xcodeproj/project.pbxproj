@@ -1,0 +1,507 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		532C9AAB1B45861500613CC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532C9AAA1B45861500613CC2 /* AppDelegate.swift */; };
+		532C9AAD1B45861500613CC2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532C9AAC1B45861500613CC2 /* ViewController.swift */; };
+		532C9AB01B45861500613CC2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 532C9AAE1B45861500613CC2 /* Main.storyboard */; };
+		532C9AB21B45861500613CC2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 532C9AB11B45861500613CC2 /* Images.xcassets */; };
+		532C9AB51B45861500613CC2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 532C9AB31B45861500613CC2 /* LaunchScreen.xib */; };
+		532C9AC11B45861500613CC2 /* canDB_exampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532C9AC01B45861500613CC2 /* canDB_exampleTests.swift */; };
+		532C9ACC1B45867F00613CC2 /* canDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532C9ACB1B45867F00613CC2 /* canDB.swift */; };
+		A63E9C14228B84C365181EE5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA42667052B871AB404677DD /* libPods.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		532C9ABB1B45861500613CC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 532C9A9D1B45861500613CC2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 532C9AA41B45861500613CC2;
+			remoteInfo = "canDB-example";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		07CFE653F84CACE2E1F58F6C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		532C9AA51B45861500613CC2 /* canDB-example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "canDB-example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		532C9AA91B45861500613CC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		532C9AAA1B45861500613CC2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		532C9AAC1B45861500613CC2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		532C9AAF1B45861500613CC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		532C9AB11B45861500613CC2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		532C9AB41B45861500613CC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		532C9ABA1B45861500613CC2 /* canDB-exampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "canDB-exampleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		532C9ABF1B45861500613CC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		532C9AC01B45861500613CC2 /* canDB_exampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = canDB_exampleTests.swift; sourceTree = "<group>"; };
+		532C9ACB1B45867F00613CC2 /* canDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = canDB.swift; path = ../../canDB/canDB.swift; sourceTree = "<group>"; };
+		532C9ACD1B45877600613CC2 /* canDB-example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "canDB-example-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		BA42667052B871AB404677DD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D06125DCD390B7C5AE885B36 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		532C9AA21B45861500613CC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A63E9C14228B84C365181EE5 /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		532C9AB71B45861500613CC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0BE332A33511898CE41A2525 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				07CFE653F84CACE2E1F58F6C /* Pods.debug.xcconfig */,
+				D06125DCD390B7C5AE885B36 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		0FC56376B9ADBBCF7925FD30 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA42667052B871AB404677DD /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		532C9A9C1B45861500613CC2 = {
+			isa = PBXGroup;
+			children = (
+				532C9AA71B45861500613CC2 /* canDB-example */,
+				532C9ABD1B45861500613CC2 /* canDB-exampleTests */,
+				532C9AA61B45861500613CC2 /* Products */,
+				0BE332A33511898CE41A2525 /* Pods */,
+				0FC56376B9ADBBCF7925FD30 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		532C9AA61B45861500613CC2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				532C9AA51B45861500613CC2 /* canDB-example.app */,
+				532C9ABA1B45861500613CC2 /* canDB-exampleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		532C9AA71B45861500613CC2 /* canDB-example */ = {
+			isa = PBXGroup;
+			children = (
+				532C9ACA1B45864100613CC2 /* canDB */,
+				532C9AAA1B45861500613CC2 /* AppDelegate.swift */,
+				532C9AAC1B45861500613CC2 /* ViewController.swift */,
+				532C9AAE1B45861500613CC2 /* Main.storyboard */,
+				532C9AB11B45861500613CC2 /* Images.xcassets */,
+				532C9AB31B45861500613CC2 /* LaunchScreen.xib */,
+				532C9ACD1B45877600613CC2 /* canDB-example-Bridging-Header.h */,
+				532C9AA81B45861500613CC2 /* Supporting Files */,
+			);
+			path = "canDB-example";
+			sourceTree = "<group>";
+		};
+		532C9AA81B45861500613CC2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				532C9AA91B45861500613CC2 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		532C9ABD1B45861500613CC2 /* canDB-exampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				532C9AC01B45861500613CC2 /* canDB_exampleTests.swift */,
+				532C9ABE1B45861500613CC2 /* Supporting Files */,
+			);
+			path = "canDB-exampleTests";
+			sourceTree = "<group>";
+		};
+		532C9ABE1B45861500613CC2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				532C9ABF1B45861500613CC2 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		532C9ACA1B45864100613CC2 /* canDB */ = {
+			isa = PBXGroup;
+			children = (
+				532C9ACB1B45867F00613CC2 /* canDB.swift */,
+			);
+			name = canDB;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		532C9AA41B45861500613CC2 /* canDB-example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 532C9AC41B45861500613CC2 /* Build configuration list for PBXNativeTarget "canDB-example" */;
+			buildPhases = (
+				F8DB9626B87EBCB320182DD7 /* Check Pods Manifest.lock */,
+				532C9AA11B45861500613CC2 /* Sources */,
+				532C9AA21B45861500613CC2 /* Frameworks */,
+				532C9AA31B45861500613CC2 /* Resources */,
+				4CDAB5E81AB6CED02654E9DA /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "canDB-example";
+			productName = "canDB-example";
+			productReference = 532C9AA51B45861500613CC2 /* canDB-example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		532C9AB91B45861500613CC2 /* canDB-exampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 532C9AC71B45861500613CC2 /* Build configuration list for PBXNativeTarget "canDB-exampleTests" */;
+			buildPhases = (
+				532C9AB61B45861500613CC2 /* Sources */,
+				532C9AB71B45861500613CC2 /* Frameworks */,
+				532C9AB81B45861500613CC2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				532C9ABC1B45861500613CC2 /* PBXTargetDependency */,
+			);
+			name = "canDB-exampleTests";
+			productName = "canDB-exampleTests";
+			productReference = 532C9ABA1B45861500613CC2 /* canDB-exampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		532C9A9D1B45861500613CC2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = "Rafael Colatusso";
+				TargetAttributes = {
+					532C9AA41B45861500613CC2 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+					532C9AB91B45861500613CC2 = {
+						CreatedOnToolsVersion = 6.3.2;
+						TestTargetID = 532C9AA41B45861500613CC2;
+					};
+				};
+			};
+			buildConfigurationList = 532C9AA01B45861500613CC2 /* Build configuration list for PBXProject "canDB-example" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 532C9A9C1B45861500613CC2;
+			productRefGroup = 532C9AA61B45861500613CC2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				532C9AA41B45861500613CC2 /* canDB-example */,
+				532C9AB91B45861500613CC2 /* canDB-exampleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		532C9AA31B45861500613CC2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				532C9AB01B45861500613CC2 /* Main.storyboard in Resources */,
+				532C9AB51B45861500613CC2 /* LaunchScreen.xib in Resources */,
+				532C9AB21B45861500613CC2 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		532C9AB81B45861500613CC2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4CDAB5E81AB6CED02654E9DA /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F8DB9626B87EBCB320182DD7 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		532C9AA11B45861500613CC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				532C9AAD1B45861500613CC2 /* ViewController.swift in Sources */,
+				532C9ACC1B45867F00613CC2 /* canDB.swift in Sources */,
+				532C9AAB1B45861500613CC2 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		532C9AB61B45861500613CC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				532C9AC11B45861500613CC2 /* canDB_exampleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		532C9ABC1B45861500613CC2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 532C9AA41B45861500613CC2 /* canDB-example */;
+			targetProxy = 532C9ABB1B45861500613CC2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		532C9AAE1B45861500613CC2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				532C9AAF1B45861500613CC2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		532C9AB31B45861500613CC2 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				532C9AB41B45861500613CC2 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		532C9AC21B45861500613CC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		532C9AC31B45861500613CC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		532C9AC51B45861500613CC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07CFE653F84CACE2E1F58F6C /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "canDB-example/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "canDB-example-Bridging-Header.h";
+			};
+			name = Debug;
+		};
+		532C9AC61B45861500613CC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D06125DCD390B7C5AE885B36 /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "canDB-example/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "canDB-example-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		532C9AC81B45861500613CC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "canDB-exampleTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/canDB-example.app/canDB-example";
+			};
+			name = Debug;
+		};
+		532C9AC91B45861500613CC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "canDB-exampleTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/canDB-example.app/canDB-example";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		532C9AA01B45861500613CC2 /* Build configuration list for PBXProject "canDB-example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				532C9AC21B45861500613CC2 /* Debug */,
+				532C9AC31B45861500613CC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		532C9AC41B45861500613CC2 /* Build configuration list for PBXNativeTarget "canDB-example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				532C9AC51B45861500613CC2 /* Debug */,
+				532C9AC61B45861500613CC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		532C9AC71B45861500613CC2 /* Build configuration list for PBXNativeTarget "canDB-exampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				532C9AC81B45861500613CC2 /* Debug */,
+				532C9AC91B45861500613CC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 532C9A9D1B45861500613CC2 /* Project object */;
+}
