@@ -39,8 +39,12 @@ class ViewController: UIViewController {
         
         let result = storeInstance.loadData("tmp")
         for item in result {
-            println(item.description!)
+            for (key, value) in (item as! NSDictionary) {
+                println("\(key): \(value)")
+            }
         }
+        
+        storeInstance.removeDataForId("tmp", idString: "Id", idsToDelete: ["19", "17"], error: nil)
     }
 
     override func didReceiveMemoryWarning() {

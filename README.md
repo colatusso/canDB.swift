@@ -20,13 +20,21 @@ example:
 
     let result = storeInstance.loadData("tmp")
     for item in result {
-        println(item.description!)
+        for (key, value) in (item as! NSDictionary) {
+            println("\(key): \(value)")
+        }
     }
+
+    storeInstance.removeDataForId("tmp", idString: "Id", idsToDelete: ["17", "19"], error: nil)
 ```
 
-All the data is saved in the _jsonData field, but you can create indexes to perform faster queries
+All the data is saved into the _jsonData field, but you can create indexes to perform queries
 and still access all the information using dictionaries keys instead of worrying with columns for all the fields.
 
 For more info take a look at the example project.
 
 If you want to share any ideas just drop me a line at @colatusso
+
+# License
+==============
+Do what ever you want... at your own risk :)

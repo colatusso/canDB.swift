@@ -63,8 +63,9 @@ class canDB: NSObject {
         
         for record in data {
             
-            if NSJSONSerialization.isValidJSONObject(record) {
-                println("JSON Válido")
+            if !NSJSONSerialization.isValidJSONObject(record) {
+                error?.memory = NSError(domain: kCanDBErrorDomain, code: -1, userInfo: ["message": "invalid JSON"])
+                return
             }
             
             let jsonData = NSJSONSerialization.dataWithJSONObject(record, options: NSJSONWritingOptions.PrettyPrinted, error: nil)!
@@ -105,8 +106,22 @@ class canDB: NSObject {
         }
     }
 
-    func removeData() {
-
+    // remove all the data from a table
+    func removeData(tableName: String, error: NSErrorPointer?) {
+        self.execute("DELETE FROM \(tableName)", error: error)
+    }
+    
+    // remove specific records
+    func removeDataForId(tableName: String, idString: String, idsToDelete: NSArray, error: NSErrorPointer?) {
+        var ids = ""
+        
+        idsToDelete.enumerateObjectsUsingBlock { (object, index, stop) -> Void in
+            if index == 0 { ids = (object as! String) }
+            else if index == (idsToDelete.count - 1) { ids = ids + ", " + (object as! String) }
+            else { ids = ids + ", " + (object as! String)}
+        }
+        
+        self.execute("DELETE FROM \(tableName) where \(idString) in ( \(ids) )", error: error)
     }
 
     func loadData(tableName: String) -> NSArray {
