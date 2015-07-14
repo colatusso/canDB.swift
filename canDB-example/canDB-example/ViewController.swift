@@ -9,20 +9,20 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    let data: NSArray = [[
-        "Id": "15",
-        "Name": "Test canDB99"
-    ]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        let filePath = NSBundle.mainBundle().pathForResource("data", ofType:"json")
+        var readError:NSError?
+        let data = NSData(contentsOfFile:filePath!, options:NSDataReadingOptions.DataReadingUncached, error:&readError)
+        let dataArray:Array = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.allZeros, error: nil) as! Array<Dictionary<String, String>>
+        
         let storeInstance = canDB.sharedInstance
         
         var error: NSError?
-        storeInstance.saveData("tmp", data: self.data, idString: "Id", error: &error)
+        storeInstance.saveData("tmp", data: dataArray, idString: "Id", error: &error)
             
         if (error != nil) {
             println("\(error!.domain), \(error!.code), \(error!.userInfo)")
@@ -30,11 +30,16 @@ class ViewController: UIViewController {
         
         else {
             var error: NSError?
-            storeInstance.addIndex("tmp", columns: ["Name"], error: &error)
+            storeInstance.addIndex("tmp", indexes: ["Name"], error: &error)
             
             if (error != nil) {
                 println("\(error!.domain), \(error!.code), \(error!.userInfo)")
             }
+        }
+        
+        let result = storeInstance.loadData("tmp")
+        for item in result {
+            println(item.description!)
         }
     }
 

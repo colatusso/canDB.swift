@@ -14,7 +14,8 @@
 		532C9AB51B45861500613CC2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 532C9AB31B45861500613CC2 /* LaunchScreen.xib */; };
 		532C9AC11B45861500613CC2 /* canDB_exampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532C9AC01B45861500613CC2 /* canDB_exampleTests.swift */; };
 		532C9ACC1B45867F00613CC2 /* canDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532C9ACB1B45867F00613CC2 /* canDB.swift */; };
-		A63E9C14228B84C365181EE5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA42667052B871AB404677DD /* libPods.a */; };
+		53BF25011B4738C600B37253 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 53BF25001B4738C600B37253 /* data.json */; };
+		B8636072E722DD49CFB3DBF8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F555F4068D0A38B36A8A4B4 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,8 @@
 
 /* Begin PBXFileReference section */
 		07CFE653F84CACE2E1F58F6C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		22FF9ABB33279EDB59676DF2 /* Pods_canDB_example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_canDB_example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F555F4068D0A38B36A8A4B4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		532C9AA51B45861500613CC2 /* canDB-example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "canDB-example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		532C9AA91B45861500613CC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		532C9AAA1B45861500613CC2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -41,7 +44,7 @@
 		532C9AC01B45861500613CC2 /* canDB_exampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = canDB_exampleTests.swift; sourceTree = "<group>"; };
 		532C9ACB1B45867F00613CC2 /* canDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = canDB.swift; path = ../../canDB/canDB.swift; sourceTree = "<group>"; };
 		532C9ACD1B45877600613CC2 /* canDB-example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "canDB-example-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
-		BA42667052B871AB404677DD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		53BF25001B4738C600B37253 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		D06125DCD390B7C5AE885B36 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -50,7 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A63E9C14228B84C365181EE5 /* libPods.a in Frameworks */,
+				B8636072E722DD49CFB3DBF8 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,7 +79,8 @@
 		0FC56376B9ADBBCF7925FD30 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BA42667052B871AB404677DD /* libPods.a */,
+				22FF9ABB33279EDB59676DF2 /* Pods_canDB_example.framework */,
+				2F555F4068D0A38B36A8A4B4 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -112,6 +116,7 @@
 				532C9AB31B45861500613CC2 /* LaunchScreen.xib */,
 				532C9ACD1B45877600613CC2 /* canDB-example-Bridging-Header.h */,
 				532C9AA81B45861500613CC2 /* Supporting Files */,
+				53BF25001B4738C600B37253 /* data.json */,
 			);
 			path = "canDB-example";
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 				532C9AB01B45861500613CC2 /* Main.storyboard in Resources */,
 				532C9AB51B45861500613CC2 /* LaunchScreen.xib in Resources */,
 				532C9AB21B45861500613CC2 /* Images.xcassets in Resources */,
+				53BF25011B4738C600B37253 /* data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,7 +427,9 @@
 				INFOPLIST_FILE = "canDB-example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "canDB-example-Bridging-Header.h";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -433,7 +441,9 @@
 				INFOPLIST_FILE = "canDB-example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "canDB-example-Bridging-Header.h";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};

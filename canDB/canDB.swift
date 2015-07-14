@@ -18,7 +18,6 @@ class canDB: NSObject {
     override init() {
         super.init()
         
-        println("iniciando")
         self.openDatabase()
     }
 
@@ -40,15 +39,15 @@ class canDB: NSObject {
         self.execute("CREATE TABLE IF NOT EXISTS " + tableName + " (_localId INTEGER PRIMARY KEY, \(idString) TEXT, _jsonData TEXT);", error: error)
     }
 
-    func addIndex(tableName: String, columns: NSArray, error: NSErrorPointer?) {
-        for column in columns {
-            self.execute("ALTER TABLE \(tableName) ADD COLUMN \(column) TEXT", error: error)
+    func addIndex(tableName: String, indexes: NSArray, error: NSErrorPointer?) {
+        for index in indexes {
+            self.execute("ALTER TABLE \(tableName) ADD COLUMN \(index) TEXT", error: error)
         }
         
         self.reIndex(tableName)
     }
     
-    func removeIndex(tableName:String, columns: NSArray) {
+    func removeIndex(tableName:String, indexes: NSArray) {
         
     }
     
@@ -60,39 +59,46 @@ class canDB: NSObject {
     func saveData(tableName: String, data: NSArray, idString: String, error: NSErrorPointer?) {
         self.createTable(tableName, idString: idString, error: error);
         
-        let columnsArray = self.getTableColumnsForTable(tableName)
+        let indexesArray = self.getIndexesForTable(tableName)
         
         for record in data {
             
+            if NSJSONSerialization.isValidJSONObject(record) {
+                println("JSON Válido")
+            }
+            
+            let jsonData = NSJSONSerialization.dataWithJSONObject(record, options: NSJSONWritingOptions.PrettyPrinted, error: nil)!
+            let rawJSONString = NSString(data: jsonData, encoding:NSUTF8StringEncoding)
+            
             let Id = record.objectForKey(idString) as! String
-            let selectQuery = "SELECT _localId FROM \(tableName) WHERE \(idString) = '\(Id)'"
+            let selectQuery = "SELECT * FROM \(tableName) WHERE \(idString) = '\(Id)'"
             let result = self.loadDataWithQuery(selectQuery)
             
             if result.count > 0 {
                 // custom columns
                 var extraQuery = ""
-                for columnName in columnsArray {
-                    if (!columnName.isEqualToString("_localId") && !columnName.isEqualToString("_jsonData") && !columnName.isEqualToString(idString)) {
-                        extraQuery += ", \(columnName) = '\(record.objectForKey(columnName)!)' "
+                for indexName in indexesArray {
+                    if (!indexName.isEqualToString("_localId") && !indexName.isEqualToString("_jsonData") && !indexName.isEqualToString(idString)) {
+                        extraQuery += ", \(indexName) = '\(record.objectForKey(indexName)!)' "
                     }
                 }
                 
-                if !self.database.executeUpdate("UPDATE \(tableName) set _jsonData = '\(record)' \(extraQuery) WHERE \(idString) = '\(Id)'", withArgumentsInArray: nil) {
+                if !self.database.executeUpdate("UPDATE \(tableName) set _jsonData = '\(rawJSONString!)' \(extraQuery) WHERE \(idString) = '\(Id)'", withArgumentsInArray: nil) {
                     error?.memory = NSError(domain: kCanDBErrorDomain, code: -1, userInfo: ["message": self.database.lastErrorMessage()])
                 }
             }
             else {
                 // custom columns
-                var extraColumns = ""
+                var extraIndexes = ""
                 var extraValues = ""
-                for columnName in columnsArray {
-                    if (!columnName.isEqualToString("_localId") && !columnName.isEqualToString("_jsonData")) {
-                        extraColumns += ", \(columnName)"
-                        extraValues += ",'\(record.objectForKey(columnName)!)' "
+                for indexName in indexesArray {
+                    if (!indexName.isEqualToString("_localId") && !indexName.isEqualToString("_jsonData")) {
+                        extraIndexes += ", \(indexName)"
+                        extraValues  += ",'\(record.objectForKey(indexName)!)' "
                     }
                 }
                 
-                if !self.database.executeUpdate("INSERT INTO \(tableName) (_jsonData \(extraColumns)) VALUES ('\(record)' \(extraValues))", withArgumentsInArray: nil) {
+                if !self.database.executeUpdate("INSERT INTO \(tableName) (_jsonData \(extraIndexes)) VALUES ('\(rawJSONString!)' \(extraValues))", withArgumentsInArray: nil) {
                     error?.memory = NSError(domain: kCanDBErrorDomain, code: -1, userInfo: ["message": self.database.lastErrorMessage()])
                 }
             }
@@ -103,8 +109,21 @@ class canDB: NSObject {
 
     }
 
-    func loadData() {
-
+    func loadData(tableName: String) -> NSArray {
+        let query = "SELECT * from \(tableName)"
+        let resultSet = self.database.executeQuery(query, withArgumentsInArray: nil)
+        var result: NSMutableArray = []
+        
+        while resultSet.next() {
+            let jsonString = resultSet.stringForColumn("_jsonData")
+            let jsonData: NSData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
+            let json: AnyObject = NSJSONSerialization.JSONObjectWithData(jsonData, options: nil, error: nil)!
+            let jsonDictionary = json as? NSDictionary
+                
+            result.addObject(jsonDictionary!)
+        }
+        
+        return result as NSArray
     }
     
     func loadDataWithQuery(query: String) -> NSArray {
@@ -112,24 +131,24 @@ class canDB: NSObject {
         var result: NSMutableArray = []
         
         while resultSet.next() {
-            result.addObject(resultSet.resultDictionary().description)
+            result.addObject(resultSet.resultDictionary())
         }
         
         return result as NSArray
     }
     
     // helper
-    func getTableColumnsForTable(tableName: String) -> NSMutableArray {
-        // get the extra columns
-        let columns = self.database.executeQuery("PRAGMA table_info(\(tableName))", withArgumentsInArray: nil)
-        let columnsArray: NSMutableArray = []
+    func getIndexesForTable(tableName: String) -> NSMutableArray {
+        // get the extra indexes
+        let indexes = self.database.executeQuery("PRAGMA table_info(\(tableName))", withArgumentsInArray: nil)
+        let indexesArray: NSMutableArray = []
         
-        while columns.next() {
-            let columnName = columns.objectForColumnName("name") as! String
-            columnsArray.addObject(columnName)
+        while indexes.next() {
+            let indexName = indexes.objectForColumnName("name") as! String
+            indexesArray.addObject(indexName)
         }
         
-        return columnsArray
+        return indexesArray
         
     }
 }
