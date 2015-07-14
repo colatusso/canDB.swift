@@ -1,7 +1,7 @@
 # canDB.swift
 ==============
 
-It's a work in progress in it's initial state.
+It's a work in progress current in it's initial stage.
 
 canDB.swift uses sqlite (via FMDB) but it works like a nonSQL database.
 Just put the data into the can and it's done.
