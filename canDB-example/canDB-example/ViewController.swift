@@ -24,7 +24,8 @@ class ViewController: UIViewController {
         var error: NSError?
         
         storeInstance.saveData("Person", data: dataArray, idString: kCanDBDefaultIdString, error: &error)
-        storeInstance.addIndex("Person", indexes: ["Name"], idString: kCanDBDefaultIdString, error: &error)
+        storeInstance.addIndex("Person", indexes: ["Name"], error: &error)
+        storeInstance.reIndex("Person", idString: kCanDBDefaultIdString)
             
         if (error != nil) {
             println("\(error!.domain), \(error!.code), \(error!.userInfo)")

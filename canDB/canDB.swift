@@ -42,12 +42,10 @@ class canDB: NSObject {
         self.execute("CREATE TABLE IF NOT EXISTS " + tableName + " (_localId INTEGER PRIMARY KEY, \(idString) TEXT, _jsonData TEXT);", error: error)
     }
 
-    func addIndex(tableName: String, indexes: NSArray, idString: String, error: NSErrorPointer?) {
+    func addIndex(tableName: String, indexes: NSArray, error: NSErrorPointer?) {
         for index in indexes {
             self.execute("ALTER TABLE \(tableName) ADD COLUMN \(index) TEXT", error: error)
         }
-        
-        self.reIndex(tableName, idString: idString)
     }
     
     // todo: improve performance on reIndex
