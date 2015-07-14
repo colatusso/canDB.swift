@@ -15,7 +15,7 @@ example:
     let dataArray:Array = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.allZeros, error: nil) as! Array<Dictionary<String, String>>
     
     let storeInstance = canDB.sharedInstance
-    storeInstance.addIndex("tmp", indexes: ["Name"], error: &error)
+    storeInstance.addIndex("tmp", indexes: ["Name"], error: nil)
     storeInstance.saveData("tmp", data: dataArray, idString: "Id", error: nil)
 
     let result = storeInstance.loadData("tmp")
