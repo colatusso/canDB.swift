@@ -7,9 +7,12 @@
 
 import Foundation
 
+let kCanDBDefaultIdString = "Id"
+
 class canDB: NSObject {
 
     let kCanDBErrorDomain = "com.candb.error"
+    
     
     static let sharedInstance = canDB()
     
@@ -39,21 +42,19 @@ class canDB: NSObject {
         self.execute("CREATE TABLE IF NOT EXISTS " + tableName + " (_localId INTEGER PRIMARY KEY, \(idString) TEXT, _jsonData TEXT);", error: error)
     }
 
-    func addIndex(tableName: String, indexes: NSArray, error: NSErrorPointer?) {
+    func addIndex(tableName: String, indexes: NSArray, idString: String, error: NSErrorPointer?) {
         for index in indexes {
             self.execute("ALTER TABLE \(tableName) ADD COLUMN \(index) TEXT", error: error)
         }
         
-        self.reIndex(tableName)
+        self.reIndex(tableName, idString: idString)
     }
     
-    func removeIndex(tableName:String, indexes: NSArray) {
+    // todo: improve performance on reIndex
+    func reIndex(tableName: String, idString: String) {
+        let result = loadDataWithQuery("SELECT * from \(tableName)")
         
-    }
-    
-    // puts "" if value not found
-    func reIndex(tableName: String) {
-        
+        saveData(tableName, data: result, idString: idString, error: nil)
     }
 
     func saveData(tableName: String, data: NSArray, idString: String, error: NSErrorPointer?) {
@@ -125,7 +126,7 @@ class canDB: NSObject {
     }
 
     func loadData(tableName: String) -> NSArray {
-        let query = "SELECT * from \(tableName)"
+        let query = "SELECT _jsonData from \(tableName)"
         let resultSet = self.database.executeQuery(query, withArgumentsInArray: nil)
         var result: NSMutableArray = []
         
@@ -146,7 +147,12 @@ class canDB: NSObject {
         var result: NSMutableArray = []
         
         while resultSet.next() {
-            result.addObject(resultSet.resultDictionary())
+            let jsonString = resultSet.stringForColumn("_jsonData")
+            let jsonData: NSData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
+            let json: AnyObject = NSJSONSerialization.JSONObjectWithData(jsonData, options: nil, error: nil)!
+            let jsonDictionary = json as? NSDictionary
+            
+            result.addObject(jsonDictionary!)
         }
         
         return result as NSArray

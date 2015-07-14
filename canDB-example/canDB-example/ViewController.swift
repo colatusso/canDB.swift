@@ -22,29 +22,31 @@ class ViewController: UIViewController {
         let storeInstance = canDB.sharedInstance
         
         var error: NSError?
-        storeInstance.saveData("tmp", data: dataArray, idString: "Id", error: &error)
+        
+        storeInstance.saveData("Person", data: dataArray, idString: kCanDBDefaultIdString, error: &error)
+        storeInstance.addIndex("Person", indexes: ["Name"], idString: kCanDBDefaultIdString, error: &error)
             
         if (error != nil) {
             println("\(error!.domain), \(error!.code), \(error!.userInfo)")
         }
         
-        else {
-            var error: NSError?
-            storeInstance.addIndex("tmp", indexes: ["Name"], error: &error)
-            
-            if (error != nil) {
-                println("\(error!.domain), \(error!.code), \(error!.userInfo)")
-            }
-        }
-        
-        let result = storeInstance.loadData("tmp")
+        println("loadData: ")
+        let result = storeInstance.loadData("Person")
         for item in result {
             for (key, value) in (item as! NSDictionary) {
                 println("\(key): \(value)")
             }
         }
         
-        storeInstance.removeDataForId("tmp", idString: "Id", idsToDelete: ["19", "17"], error: nil)
+        println("\nloadDataWithQuery: ")
+        let resultWithQuery = storeInstance.loadDataWithQuery("SELECT * FROM Person WHERE Name='John'")
+        for item in resultWithQuery {
+            for (key, value) in (item as! NSDictionary) {
+                println("\(key): \(value)")
+            }
+        }
+        
+        storeInstance.removeDataForId("Person", idString: kCanDBDefaultIdString, idsToDelete: ["19", "17"], error: nil)
     }
 
     override func didReceiveMemoryWarning() {

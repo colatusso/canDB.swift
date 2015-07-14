@@ -1,5 +1,5 @@
 # canDB.swift
---------------
+==============
 
 It's a work in progress current in it's initial stage.
 
@@ -15,11 +15,18 @@ example:
     let dataArray:Array = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.allZeros, error: nil) as! Array<Dictionary<String, String>>
     
     let storeInstance = canDB.sharedInstance
-    storeInstance.addIndex("tmp", indexes: ["Name"], error: nil)
-    storeInstance.saveData("tmp", data: dataArray, idString: "Id", error: nil)
+    storeInstance.saveData("Person", data: dataArray, idString: "Id", error: nil)
+    storeInstance.addIndex("Person", indexes: ["Name"], error: nil)
 
-    let result = storeInstance.loadData("tmp")
+    let result = storeInstance.loadData("Person")
     for item in result {
+        for (key, value) in (item as! NSDictionary) {
+            println("\(key): \(value)")
+        }
+    }
+
+    let resultWithQuery = storeInstance.loadDataWithQuery("SELECT * FROM Person WHERE Name='John'")
+    for item in resultWithQuery {
         for (key, value) in (item as! NSDictionary) {
             println("\(key): \(value)")
         }
@@ -36,5 +43,5 @@ For more info take a look at the example project.
 If you want to share any ideas just drop me a line at @colatusso
 
 # License
---------------
+==============
 Do what ever you want... at your own risk :)
