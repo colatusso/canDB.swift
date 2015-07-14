@@ -1,5 +1,5 @@
 # canDB.swift
-==============
+--------------
 
 It's a work in progress current in it's initial stage.
 
@@ -36,5 +36,5 @@ For more info take a look at the example project.
 If you want to share any ideas just drop me a line at @colatusso
 
 # License
-==============
+--------------
 Do what ever you want... at your own risk :)
