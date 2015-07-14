@@ -18,7 +18,7 @@ example:
     let storeInstance = canDB.sharedInstance
 
     // saving the data, the can is automatically created if not exists
-    storeInstance.saveData("Person", data: dataArray, idString: "Id", error: nil)
+    storeInstance.saveData("Person", data: dataArray, idString: kCanDBDefaultIdString, error: nil)
 
     // adding the index for future queries
     storeInstance.addIndex("Person", indexes: ["Name"], error: nil)
@@ -38,7 +38,7 @@ example:
         }
     }
 
-    storeInstance.removeDataForId("Person", idString: "Id", idsToDelete: ["17", "19"], error: nil)
+    storeInstance.removeDataForId("Person", idString: kCanDBDefaultIdString, idsToDelete: ["17", "19"], error: nil)
 ```
 
 All the data is saved into the _jsonData field, but you can create indexes to perform queries
