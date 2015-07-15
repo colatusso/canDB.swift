@@ -1,8 +1,6 @@
 # canDB.swift
 ==============
 
-It's a work in progress current in it's initial stage.
-
 canDB.swift uses sqlite (via FMDB) but it works like a nonSQL database.
 Just put the data into the can and it's done.
 
@@ -20,8 +18,9 @@ example:
     // saving the data, the can is automatically created if not exists
     storeInstance.saveData("Person", data: dataArray, idString: kCanDBDefaultIdString, error: nil)
 
-    // adding the index for future queries
+    // adding the index for future queries and reindexing the table
     storeInstance.addIndex("Person", indexes: ["Name"], error: nil)
+    storeInstance.reIndex("Person", idString: kCanDBDefaultIdString)
 
     let result = storeInstance.loadData("Person")
     for item in result {
@@ -46,7 +45,8 @@ and still access all the information using dictionaries keys instead of worrying
 
 For more info take a look at the example project.
 
-If you want to share any ideas just drop me a line at @colatusso
+If you want to share any ideas just drop me a line at @colatusso.
+
 
 # License
 ==============

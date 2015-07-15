@@ -48,7 +48,7 @@ class canDB: NSObject {
         }
     }
     
-    // todo: improve performance on reIndex
+    // todo: improve performance on reindexing big tables
     func reIndex(tableName: String, idString: String) {
         let result = loadDataWithQuery("SELECT * from \(tableName)")
         
