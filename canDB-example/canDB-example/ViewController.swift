@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet var textView: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -36,8 +38,12 @@ class ViewController: UIViewController {
         for item in result {
             for (key, value) in (item as! NSDictionary) {
                 println("\(key): \(value)")
+                self.textView?.text = self.textView?.text.stringByAppendingString("\(key): \(value)\n")
             }
+            self.textView?.text = self.textView?.text.stringByAppendingString("\n")
         }
+        
+//        self.textView?.text = result.description
         
         println("\nloadDataWithQuery: ")
         let resultWithQuery = storeInstance.loadDataWithQuery("SELECT * FROM Person WHERE Name='John'")
