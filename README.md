@@ -50,4 +50,4 @@ If you want to share any ideas just drop me a line at @colatusso.
 
 ## License
 
-The template is released under the MIT license.
+All this code is released under the MIT license.
