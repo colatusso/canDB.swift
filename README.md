@@ -1,5 +1,4 @@
-# canDB.swift
-==============
+## canDB.swift
 
 canDB.swift uses sqlite (via FMDB) but it works like a nonSQL database.
 Just put the json into the can and retrieve it as a dictionary.
@@ -49,6 +48,6 @@ For more info take a look at the example project.
 If you want to share any ideas just drop me a line at @colatusso.
 
 
-# License
-==============
-Do what ever you want... at your own risk :)
+## License
+
+The template is released under the MIT license.
