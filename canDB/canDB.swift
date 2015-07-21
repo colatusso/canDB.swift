@@ -70,7 +70,7 @@ class canDB: NSObject {
             let jsonData = NSJSONSerialization.dataWithJSONObject(record, options: NSJSONWritingOptions.PrettyPrinted, error: nil)!
             let rawJSONString = NSString(data: jsonData, encoding:NSUTF8StringEncoding)
             
-            let Id = "(\(record.objectForKey(idString))"
+            let Id: AnyObject! = record.objectForKey(idString)
             let selectQuery = "SELECT * FROM \(tableName) WHERE \(idString) = '\(Id)'"
             let result = self.loadDataWithQuery(selectQuery)
             
