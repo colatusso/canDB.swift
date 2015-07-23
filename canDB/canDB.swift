@@ -10,7 +10,7 @@ import Foundation
 let kCanDBDefaultIdString = "Id"
 
 class canDB: NSObject {
-
+    
     let kCanDBErrorDomain = "com.candb.error"
     
     
@@ -23,7 +23,7 @@ class canDB: NSObject {
         
         self.openDatabase()
     }
-
+    
     func execute(command: String, error: NSErrorPointer?){
         if !self.database.executeUpdate(command, withArgumentsInArray: nil) {
             error?.memory = NSError(domain: kCanDBErrorDomain, code: -1, userInfo: ["message": self.database.lastErrorMessage()])
@@ -41,10 +41,10 @@ class canDB: NSObject {
     func createTable(tableName: String, idString: String, error: NSErrorPointer?) {
         self.execute("CREATE TABLE IF NOT EXISTS " + tableName + " (_localId INTEGER PRIMARY KEY, \(idString) TEXT, _jsonData TEXT);", error: error)
     }
-
+    
     func addIndex(tableName: String, indexes: NSArray, error: NSErrorPointer?) {
         for index in indexes {
-            self.execute("ALTER TABLE \(tableName) ADD COLUMN \(index) TEXT", error: error)
+            self.execute("ALTER TABLE \(tableName) ADD COLUMN [\(index)] TEXT", error: error)
         }
     }
     
@@ -54,7 +54,7 @@ class canDB: NSObject {
         
         saveData(tableName, data: result, idString: idString, error: nil)
     }
-
+    
     func saveData(tableName: String, data: NSArray, idString: String, error: NSErrorPointer?) {
         self.createTable(tableName, idString: idString, error: error);
         
@@ -79,7 +79,7 @@ class canDB: NSObject {
                 var extraQuery = ""
                 for indexName in indexesArray {
                     if (!indexName.isEqualToString("_localId") && !indexName.isEqualToString("_jsonData") && !indexName.isEqualToString(idString)) {
-                        extraQuery += ", \(indexName) = '\(record.objectForKey(indexName)!)' "
+                        extraQuery += ", [\(indexName)] = '\(record.valueForKeyPath(indexName as! String)!)' "
                     }
                 }
                 
@@ -93,8 +93,8 @@ class canDB: NSObject {
                 var extraValues = ""
                 for indexName in indexesArray {
                     if (!indexName.isEqualToString("_localId") && !indexName.isEqualToString("_jsonData")) {
-                        extraIndexes += ", \(indexName)"
-                        extraValues  += ",'\(record.objectForKey(indexName)!)' "
+                        extraIndexes += ", [\(indexName)]"
+                        extraValues  += ",'\(record.valueForKeyPath(indexName as! String)!)' "
                     }
                 }
                 
@@ -104,7 +104,7 @@ class canDB: NSObject {
             }
         }
     }
-
+    
     // remove all the data from a table
     func removeData(tableName: String, error: NSErrorPointer?) {
         self.execute("DELETE FROM \(tableName)", error: error)
@@ -122,7 +122,7 @@ class canDB: NSObject {
         
         self.execute("DELETE FROM \(tableName) where \(idString) in ( \(ids) )", error: error)
     }
-
+    
     func loadData(tableName: String) -> NSArray {
         let query = "SELECT _jsonData from \(tableName)"
         let resultSet = self.database.executeQuery(query, withArgumentsInArray: nil)
@@ -133,7 +133,7 @@ class canDB: NSObject {
             let jsonData: NSData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
             let json: AnyObject = NSJSONSerialization.JSONObjectWithData(jsonData, options: nil, error: nil)!
             let jsonDictionary = json as? NSDictionary
-                
+            
             result.addObject(jsonDictionary!)
         }
         

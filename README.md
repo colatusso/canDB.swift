@@ -18,8 +18,8 @@ example:
     // saving the data, the can is automatically created if not exists
     storeInstance.saveData("Person", data: dataArray, idString: kCanDBDefaultIdString, error: nil)
 
-    // adding the index for future queries and reindexing the table
-    storeInstance.addIndex("Person", indexes: ["Name"], error: nil)
+    // now it's possible to use keyPath indexes like "Address.Home"
+    storeInstance.addIndex("Person", indexes: ["Name", "Address.Home", "Address.Work"], error: nil)
     storeInstance.reIndex("Person", idString: kCanDBDefaultIdString)
 
     let result = storeInstance.loadData("Person")

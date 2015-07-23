@@ -19,14 +19,15 @@ class ViewController: UIViewController {
         let filePath = NSBundle.mainBundle().pathForResource("data", ofType:"json")
         var readError:NSError?
         let data = NSData(contentsOfFile:filePath!, options:NSDataReadingOptions.DataReadingUncached, error:&readError)
-        let dataArray:Array = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.allZeros, error: nil) as! Array<Dictionary<String, String>>
+        let dataArray:Array = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.allZeros, error: nil) as! Array<Dictionary<String, AnyObject>>
         
         let storeInstance = canDB.sharedInstance
         
         var error: NSError?
         
+        // now it's possible to use keyPath indexes like "Address.Home"
         storeInstance.saveData("Person", data: dataArray, idString: kCanDBDefaultIdString, error: &error)
-        storeInstance.addIndex("Person", indexes: ["Name"], error: &error)
+        storeInstance.addIndex("Person", indexes: ["Name", "Address.Home", "Address.Work"], error: &error)
         storeInstance.reIndex("Person", idString: kCanDBDefaultIdString)
             
         if (error != nil) {
@@ -42,8 +43,6 @@ class ViewController: UIViewController {
             }
             self.textView?.text = self.textView?.text.stringByAppendingString("\n")
         }
-        
-//        self.textView?.text = result.description
         
         println("\nloadDataWithQuery: ")
         let resultWithQuery = storeInstance.loadDataWithQuery("SELECT * FROM Person WHERE Name='John'")

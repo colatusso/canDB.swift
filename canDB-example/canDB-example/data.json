@@ -3,14 +3,20 @@
     "Id": "17",
     "Name": "John",
     "Age": "23",
-    "Address": "Street Smart",
     "Number": "202",
+    "Address": {
+        "Home": "Street Smart",
+        "Work": "Baker Street 221b"
+    }
  },
  {
     "Id": "19",
     "Name": "Armless",
     "Age": "42",
-    "Address": "None ;(",
+    "Address": {
+        "Home": "Street 1",
+        "Work": "None ;("
+    },
     "CustomField": "Custom value"
  }
 ]
