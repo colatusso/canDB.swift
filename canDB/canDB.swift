@@ -70,6 +70,7 @@ class canDB: NSObject {
             let jsonData = NSJSONSerialization.dataWithJSONObject(record, options: NSJSONWritingOptions.PrettyPrinted, error: nil)!
             let rawJSONString = NSString(data: jsonData, encoding:NSUTF8StringEncoding)
             
+            
             let Id: AnyObject! = record.objectForKey(idString)
             let selectQuery = "SELECT * FROM \(tableName) WHERE \(idString) = '\(Id)'"
             let result = self.loadDataWithQuery(selectQuery)
@@ -83,7 +84,7 @@ class canDB: NSObject {
                     }
                 }
                 
-                if !self.database.executeUpdate("UPDATE \(tableName) set _jsonData = '\(rawJSONString!)' \(extraQuery) WHERE \(idString) = '\(Id)'", withArgumentsInArray: nil) {
+                if !self.database.executeUpdate("UPDATE \(tableName) set _jsonData = :rawJson \(extraQuery) WHERE \(idString) = '\(Id)'", withParameterDictionary: ["rawJson": "\(rawJSONString!)"]) {
                     error?.memory = NSError(domain: kCanDBErrorDomain, code: -1, userInfo: ["message": self.database.lastErrorMessage()])
                 }
             }
@@ -98,7 +99,7 @@ class canDB: NSObject {
                     }
                 }
                 
-                if !self.database.executeUpdate("INSERT INTO \(tableName) (_jsonData \(extraIndexes)) VALUES ('\(rawJSONString!)' \(extraValues))", withArgumentsInArray: nil) {
+                if !self.database.executeUpdate("INSERT INTO \(tableName) (_jsonData \(extraIndexes)) VALUES (:rawJson \(extraValues))", withParameterDictionary: ["rawJson": "\(rawJSONString!)"]) {
                     error?.memory = NSError(domain: kCanDBErrorDomain, code: -1, userInfo: ["message": self.database.lastErrorMessage()])
                 }
             }
@@ -140,6 +141,7 @@ class canDB: NSObject {
         return result as NSArray
     }
     
+    // you can specify the query, but the result will be the _jsonData parsed into NSDictionary
     func loadDataWithQuery(query: String) -> NSArray {
         let resultSet = self.database.executeQuery(query, withArgumentsInArray: nil)
         var result: NSMutableArray = []
@@ -151,6 +153,17 @@ class canDB: NSObject {
             let jsonDictionary = json as? NSDictionary
             
             result.addObject(jsonDictionary!)
+        }
+        
+        return result as NSArray
+    }
+    
+    func loadRawDataWithQuery(query: String) -> NSArray {
+        let resultSet = self.database.executeQuery(query, withArgumentsInArray: nil)
+        var result: NSMutableArray = []
+        
+        while resultSet.next() {
+            result.addObject(resultSet.resultDictionary())
         }
         
         return result as NSArray
