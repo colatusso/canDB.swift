@@ -17,42 +17,63 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         let filePath = NSBundle.mainBundle().pathForResource("data", ofType:"json")
-        var readError:NSError?
-        let data = NSData(contentsOfFile:filePath!, options:NSDataReadingOptions.DataReadingUncached, error:&readError)
-        let dataArray:Array = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.allZeros, error: nil) as! Array<Dictionary<String, AnyObject>>
+        let data: NSData?
+        do {
+            data = try NSData(contentsOfFile:filePath!, options:NSDataReadingOptions.DataReadingUncached)
+        } catch let error as NSError {
+            print("\(error.localizedDescription)")
+            data = nil
+        }
+        let dataArray:Array = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions())) as! Array<Dictionary<String, AnyObject>>
         
         let storeInstance = canDB.sharedInstance
         
-        var error: NSError?
-        
-        // now it's possible to use keyPath indexes like "Address.Home"
-        storeInstance.saveData("Person", data: dataArray, idString: kCanDBDefaultIdString, error: &error)
-        storeInstance.addIndex("Person", indexes: ["Name", "Address.Home", "Address.Work"], error: &error)
-        storeInstance.reIndex("Person", idString: kCanDBDefaultIdString)
+        do {
+            try storeInstance.openDatabase()
+                        
+            // now it's possible to use keyPath indexes like "Address.Home"
+            do {
+                try storeInstance.saveData("Person", data: dataArray, idString: kCanDBDefaultIdString)
+                try storeInstance.addIndex("Person", indexes: ["Name", "Address.Home", "Address.Work"])
+                try storeInstance.reIndex("Person", idString: kCanDBDefaultIdString)
+                
+            } catch CanDBError.Error(let message) {
+                print (message)
+            } catch {
+                print ("error")
+            }
             
-        if (error != nil) {
-            println("\(error!.domain), \(error!.code), \(error!.userInfo)")
-        }
-        
-        println("loadData: ")
-        let result = storeInstance.loadData("Person")
-        for item in result {
-            for (key, value) in (item as! NSDictionary) {
-                println("\(key): \(value)")
-                self.textView?.text = self.textView?.text.stringByAppendingString("\(key): \(value)\n")
+            print("loadData: ", terminator: "")
+            let result = storeInstance.loadData("Person")
+            for item in result {
+                for (key, value) in (item as! NSDictionary) {
+                    print("\(key): \(value)", terminator: "")
+                    self.textView?.text = self.textView?.text.stringByAppendingString("\(key): \(value)\n")
+                }
+                self.textView?.text = self.textView?.text.stringByAppendingString("\n")
             }
-            self.textView?.text = self.textView?.text.stringByAppendingString("\n")
-        }
-        
-        println("\nloadDataWithQuery: ")
-        let resultWithQuery = storeInstance.loadDataWithQuery("SELECT * FROM Person WHERE Name='John'")
-        for item in resultWithQuery {
-            for (key, value) in (item as! NSDictionary) {
-                println("\(key): \(value)")
+            
+            print("loadDataWithQuery: ", terminator: "")
+            let resultWithQuery = storeInstance.loadDataWithQuery("SELECT * FROM Person WHERE Name='John'")
+            for item in resultWithQuery {
+                for (key, value) in (item as! NSDictionary) {
+                    print("\(key): \(value)", terminator: "")
+                }
             }
+            
+            do {
+                try storeInstance.removeDataForId("Person", idString: kCanDBDefaultIdString, idsToDelete: ["19", "17"])
+            } catch CanDBError.Error(let message) {
+                print (message)
+            } catch {
+                print ("unknown error")
+            }
+
+        } catch {
+            print("coud not open the database")
         }
         
-        storeInstance.removeDataForId("Person", idString: kCanDBDefaultIdString, idsToDelete: ["19", "17"], error: nil)
+    
     }
 
     override func didReceiveMemoryWarning() {

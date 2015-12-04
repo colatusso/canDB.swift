@@ -7,12 +7,13 @@
 
 import Foundation
 
+enum CanDBError: ErrorType {
+    case Error(String)
+}
+
 let kCanDBDefaultIdString = "Id"
 
 class canDB: NSObject {
-    
-    let kCanDBErrorDomain = "com.candb.error"
-    
     
     static let sharedInstance = canDB()
     
@@ -20,54 +21,79 @@ class canDB: NSObject {
     
     override init() {
         super.init()
-        
-        self.openDatabase()
     }
     
-    func execute(command: String, error: NSErrorPointer?){
+    func execute(command: String) throws {
         if !self.database.executeUpdate(command, withArgumentsInArray: nil) {
-            error?.memory = NSError(domain: kCanDBErrorDomain, code: -1, userInfo: ["message": self.database.lastErrorMessage()])
+            throw CanDBError.Error("CanDBError: \(self.database.lastErrorMessage())")
         }
     }
     
-    func openDatabase() {
-        let documentsFolder = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
+    func openDatabase() throws {
+        let documentsFolder = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
         let path = documentsFolder + "/canDB.sqlite"
         
         self.database = FMDatabase(path: path)
-        self.database.open()
+        if !self.database.open() {
+            throw CanDBError.Error("error opening the database")
+        }
     }
     
-    func createTable(tableName: String, idString: String, error: NSErrorPointer?) {
-        self.execute("CREATE TABLE IF NOT EXISTS " + tableName + " (_localId INTEGER PRIMARY KEY, \(idString) TEXT, _jsonData TEXT);", error: error)
+    func createTable(tableName: String, idString: String) throws {
+        do {
+            try self.execute("CREATE TABLE IF NOT EXISTS " + tableName + " (_localId INTEGER PRIMARY KEY, \(idString) TEXT, _jsonData TEXT);")
+        } catch CanDBError.Error(let message) {
+            throw CanDBError.Error(message)
+        } catch {
+            throw CanDBError.Error("unknown error")
+        }
+        
     }
     
-    func addIndex(tableName: String, indexes: NSArray, error: NSErrorPointer?) {
+    func addIndex(tableName: String, indexes: NSArray) throws {
         for index in indexes {
-            self.execute("ALTER TABLE \(tableName) ADD COLUMN [\(index)] TEXT", error: error)
+            do {
+                try self.execute("ALTER TABLE \(tableName) ADD COLUMN [\(index)] TEXT")
+            } catch CanDBError.Error(let message) {
+                throw CanDBError.Error(message)
+            } catch {
+                throw CanDBError.Error("unknown error")
+            }
         }
     }
     
     // todo: improve performance on reindexing big tables
-    func reIndex(tableName: String, idString: String) {
+    func reIndex(tableName: String, idString: String) throws {
         let result = loadDataWithQuery("SELECT * from \(tableName)")
         
-        saveData(tableName, data: result, idString: idString, error: nil)
+        do {
+            try self.saveData(tableName, data: result, idString: idString)
+        } catch CanDBError.Error(let message) {
+            throw CanDBError.Error(message)
+        } catch {
+            throw CanDBError.Error("unknown error")
+        }
     }
     
-    func saveData(tableName: String, data: NSArray, idString: String, error: NSErrorPointer?) {
-        self.createTable(tableName, idString: idString, error: error);
+    func saveData(tableName: String, data: NSArray, idString: String) throws {
+        do {
+            try self.createTable(tableName, idString: idString);
+        } catch CanDBError.Error(let message) {
+            throw CanDBError.Error(message)
+        } catch {
+            throw CanDBError.Error("unknown error")
+        }
         
         let indexesArray = self.getIndexesForTable(tableName)
         
         for record in data {
             
             if !NSJSONSerialization.isValidJSONObject(record) {
-                error?.memory = NSError(domain: kCanDBErrorDomain, code: -1, userInfo: ["message": "invalid JSON"])
+                throw CanDBError.Error("invalid JSON")
                 return
             }
             
-            let jsonData = NSJSONSerialization.dataWithJSONObject(record, options: NSJSONWritingOptions.PrettyPrinted, error: nil)!
+            let jsonData = try! NSJSONSerialization.dataWithJSONObject(record, options: NSJSONWritingOptions.PrettyPrinted)
             let rawJSONString = NSString(data: jsonData, encoding:NSUTF8StringEncoding)
             
             
@@ -85,7 +111,7 @@ class canDB: NSObject {
                 }
                 
                 if !self.database.executeUpdate("UPDATE \(tableName) set _jsonData = :rawJson \(extraQuery) WHERE \(idString) = '\(Id)'", withParameterDictionary: ["rawJson": "\(rawJSONString!)"]) {
-                    error?.memory = NSError(domain: kCanDBErrorDomain, code: -1, userInfo: ["message": self.database.lastErrorMessage()])
+                    throw CanDBError.Error(self.database.lastErrorMessage())
                 }
             }
             else {
@@ -100,19 +126,25 @@ class canDB: NSObject {
                 }
                 
                 if !self.database.executeUpdate("INSERT INTO \(tableName) (_jsonData \(extraIndexes)) VALUES (:rawJson \(extraValues))", withParameterDictionary: ["rawJson": "\(rawJSONString!)"]) {
-                    error?.memory = NSError(domain: kCanDBErrorDomain, code: -1, userInfo: ["message": self.database.lastErrorMessage()])
+                    throw CanDBError.Error(self.database.lastErrorMessage())
                 }
             }
         }
     }
     
     // remove all the data from a table
-    func removeData(tableName: String, error: NSErrorPointer?) {
-        self.execute("DELETE FROM \(tableName)", error: error)
+    func removeData(tableName: String) throws {
+        do {
+            try self.execute("DELETE FROM \(tableName)")
+        } catch CanDBError.Error(let message) {
+            throw CanDBError.Error(message)
+        } catch {
+            throw CanDBError.Error("unknown error")
+        }
     }
     
     // remove specific records
-    func removeDataForId(tableName: String, idString: String, idsToDelete: NSArray, error: NSErrorPointer?) {
+    func removeDataForId(tableName: String, idString: String, idsToDelete: NSArray) throws {
         var ids = ""
         
         idsToDelete.enumerateObjectsUsingBlock { (object, index, stop) -> Void in
@@ -121,18 +153,24 @@ class canDB: NSObject {
             else { ids = ids + ", " + (object as! String)}
         }
         
-        self.execute("DELETE FROM \(tableName) where \(idString) in ( \(ids) )", error: error)
+        do {
+            try self.execute("DELETE FROM \(tableName) where \(idString) in ( \(ids) )")
+        } catch CanDBError.Error(let message) {
+            throw CanDBError.Error(message)
+        } catch {
+            throw CanDBError.Error("unknown error")
+        }
     }
     
     func loadData(tableName: String) -> NSArray {
         let query = "SELECT _jsonData from \(tableName)"
         let resultSet = self.database.executeQuery(query, withArgumentsInArray: nil)
-        var result: NSMutableArray = []
+        let result: NSMutableArray = []
         
         while resultSet.next() {
             let jsonString = resultSet.stringForColumn("_jsonData")
             let jsonData: NSData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
-            let json: AnyObject = NSJSONSerialization.JSONObjectWithData(jsonData, options: nil, error: nil)!
+            let json: AnyObject = try! NSJSONSerialization.JSONObjectWithData(jsonData, options: [])
             let jsonDictionary = json as? NSDictionary
             
             result.addObject(jsonDictionary!)
@@ -144,12 +182,12 @@ class canDB: NSObject {
     // you can specify the query, but the result will be the _jsonData parsed into NSDictionary
     func loadDataWithQuery(query: String) -> NSArray {
         let resultSet = self.database.executeQuery(query, withArgumentsInArray: nil)
-        var result: NSMutableArray = []
+        let result: NSMutableArray = []
         
         while resultSet.next() {
             let jsonString = resultSet.stringForColumn("_jsonData")
             let jsonData: NSData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
-            let json: AnyObject = NSJSONSerialization.JSONObjectWithData(jsonData, options: nil, error: nil)!
+            let json: AnyObject = try! NSJSONSerialization.JSONObjectWithData(jsonData, options: [])
             let jsonDictionary = json as? NSDictionary
             
             result.addObject(jsonDictionary!)
@@ -160,7 +198,7 @@ class canDB: NSObject {
     
     func loadRawDataWithQuery(query: String) -> NSArray {
         let resultSet = self.database.executeQuery(query, withArgumentsInArray: nil)
-        var result: NSMutableArray = []
+        let result: NSMutableArray = []
         
         while resultSet.next() {
             result.addObject(resultSet.resultDictionary())
