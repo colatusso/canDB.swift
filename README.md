@@ -7,8 +7,6 @@ Easy as pie.
 main methods:
 
 ```swift
-    // loading the json
-        
         // singleton
         let storeInstance = canDB.sharedInstance
                 
@@ -35,7 +33,7 @@ main methods:
             }
         }
             
-        // removing methods
+        // remove methods
         storeInstance.removeData("Person")
         storeInstance.removeDataForId("Person", idString: kCanDBDefaultIdString, idsToDelete: ["19", "17"])
 
