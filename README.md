@@ -1,8 +1,11 @@
+
+
 ## canDB.swift
 
 canDB.swift uses sqlite (via FMDB) but it works like a nonSQL database.
 Just put the json into the can and retrieve it as a dictionary.
 Easy as pie.
+Call `openDatabase()` before using the store.
 
 main methods:
 
